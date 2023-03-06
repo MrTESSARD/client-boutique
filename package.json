@@ -1,0 +1,66 @@
+{
+  "name": "server-boutique",
+  "version": "1.0.0",
+  "description": "Une boutique en ligne avec Mongo, Express, React 17, Node (MERN), GraphQL, Apollo Client, Paypal, Google Auth / Fullstack React 17, GraphQL, Apollo, Google Sign & Paypal",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrTESSARD/client-boutique.git"
+  },
+  "keywords": [
+    "Mongo",
+    "Express",
+    "React",
+    "17",
+    "Node",
+    "(MERN)",
+    "GraphQL",
+    "Apollo",
+    "Client",
+    "Paypal",
+    "Google",
+    "Auth"
+  ],
+  "author": "MrTESSARD Dimitri",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/MrTESSARD/client-boutique/issues"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.7.9",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "graphql": "^16.6.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^6.8.1",
+    "react-scripts": "4.0.1",
+    "web-vitals": "^0.2.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "dev": "(cd server && nodemon index.js) & npm start"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
