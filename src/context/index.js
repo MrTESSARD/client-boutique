@@ -1,20 +1,39 @@
-import React, { useState } from "react"
-export const Context = React.createContext()
+import React, { createContext, useMemo, useState } from "react"
+export const Context = createContext()
 
 const FiltersProvider=({children})=>{
     const categories =['Women', "Men", "Kids", "Accessories"]
     const filters = ["Top", "Bottom", "Jacket"];
-    const [category, setCategory] = React.useState(categories[0].toLowerCase());
+    const [category, setCategory] = useState(categories[0].toLowerCase());
+    const [filtersChecked, setFiltersChecked] = useState({
+        Top:false, 
+        Bottom:false, 
+        Jacket: false
+    });
     const updateCategory = value => setCategory(value.toLowerCase())
-    
-    const value = React.useMemo(()=>{
+
+    const updateFilters = (e) =>
+    setFiltersChecked((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.checked,
+    }));
+
+  const filtersKeys = () => {//retourner tableau avec des valeurs qui sont uniquement en true
+    return Object.entries(filtersChecked)
+      .map(([key, value]) => value && key)
+      .filter((obj) => !!obj);
+  };
+    // console.log(filtersChecked)
+    const value = useMemo(()=>{
         return{
             categories,
+            category,
             filters,
             updateCategory,
-            category
+            updateFilters,
+            filtersChecked: filtersKeys(),
         }
-    },[category]);
+    },[category, filtersChecked]);
         return <Context.Provider value={value}>{children}</Context.Provider>
 }
 

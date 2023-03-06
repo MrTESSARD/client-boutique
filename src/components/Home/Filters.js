@@ -3,7 +3,7 @@ import {Context  } from "../../context";
 const Filters = {
   Category: function ({ name }) {
     
-    const {updateCategory, category} = React.useContext(Context);
+    const {updateCategory, category} = useContext(Context);
     const handleOnChange =e => updateCategory(e.target.value)
     
     return (
@@ -27,12 +27,14 @@ const Filters = {
     );
   },
   Filter: function ({ name }) {
+    const {updateFilters} = React.useContext(Context);
+    // const handleOnChange =e => updateFilters(e.target.value)
     return (
       <div className="mt-2 mb-2 pl-2">
         <div className="custom-control custom-checkbox">
           <input
             name={name}
-            onChange={() => {}}
+            onChange={updateFilters}
             type="checkbox"
             className="custom-control-input"
             id={name}

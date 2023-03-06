@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
 function CartDropdown({ show, handleOnClick }) {
@@ -33,8 +33,9 @@ function CartDropdown({ show, handleOnClick }) {
 </div>)
 }
 function Header() {
-	const [currentLink, setCurrent] = React.useState('')
-	const [show, setShow] = React.useState(false)
+	const [currentLink, setCurrent] = useState('')
+	
+	const [show, setShow] = useState(false)
 	const links = [ "cart", "orders"]
 	const handleOnClick = () => setShow(!show)
     return( 
