@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 import CartFooter from "./CartFooter";
 import { Table } from "../components";
 import Row from "./Row";
-import { selectCartTotal } from "../../lib/redux/selectors";
+// import { selectCartTotal } from "../../lib/redux/selectors";
 
 function Cart({ value }) {
   const items = useSelector((state) => state.items);
-  const total = useSelector(selectCartTotal);
+  // const total = useSelector(selectCartTotal);
   // debugger;
   console.log(value);
   return (

@@ -33,7 +33,7 @@ function Product() {
           <div className="row">
             <div className="col-md-6 text-center">
               <div className="product-image d-block mt-3">
-                <img className="img-fluid" src={`images/${id}.png`} alt="" />
+                <img className="img-fluid" src={`images/${id}.png`} alt={name} />
               </div>
             </div>
             <div className="col-md-6 mt-5 mt-md-2 text-center text-md-left">
@@ -48,7 +48,7 @@ function Product() {
               <p>Suspendisse cursus erat sed sem sagittis cursus. Etiam porta sem malesuada magna mollis euismod.</p>
               <div className="row mt-4">
                 <div className="col-6">
-                  <label for="size">Size</label>
+                  <label htmlFor="size">Size</label>
                   <select
                   value={details.size}
                   name="size"
@@ -56,14 +56,14 @@ function Product() {
                   className="custom-select form-control  mb-4"
                   onChange={handleOnChange}
                 >
-                    <option selected="">Size</option>
+                    <option >Size</option>
                     <option value="small">Small</option>
                     <option value="medium">Medium</option>
                     <option value="large">Large</option>
                   </select>
                 </div>
                 <div className="col-6">
-                  <label for="quantity">Quantity:</label>
+                  <label htmlFor="quantity">Quantity:</label>
                   <input
                   value={details.quantity}
                   id="quantity"
@@ -76,7 +76,7 @@ function Product() {
               </div>
               <button
               className="btn btn-full-width btn-lg btn-outline-orange"
-              onClick={addCart}
+              onClick={()=>addCart()}
             >
               Add to cart
             </button>

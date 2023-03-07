@@ -18,7 +18,7 @@ const Filters = {
             checked={category === name.toLowerCase()}
           />
           &nbsp;
-          <label className="custom-control-label" for={name}>
+          <label className="custom-control-label" htmlFor={name}>
             {name}
           </label>
         </div>
@@ -39,7 +39,7 @@ const Filters = {
             id={name}
           />
           &nbsp;
-          <label className="custom-control-label" for={name}>
+          <label className="custom-control-label" htmlFor={name}>
             {name}
           </label>
         </div>
