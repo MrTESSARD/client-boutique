@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
-import {Context  } from "../../context";
+import { Context } from "../../context";
 const Filters = {
   Category: function ({ name }) {
-    
-    const {updateCategory, category} = useContext(Context);
-    const handleOnChange =e => updateCategory(e.target.value)
-    
+    const { updateCategory, category } = useContext(Context);
+    const handleOnChange = (e) => updateCategory(e.target.value);
+
     return (
       <div className="mt-2 mb-2 pl-2">
         <div className="custom-control custom-checkbox">
@@ -16,7 +15,7 @@ const Filters = {
             value={name}
             className="custom-control-input"
             id={name}
-            checked={category===name.toLowerCase()}
+            checked={category === name.toLowerCase()}
           />
           &nbsp;
           <label className="custom-control-label" for={name}>
@@ -27,7 +26,7 @@ const Filters = {
     );
   },
   Filter: function ({ name }) {
-    const {updateFilters} = React.useContext(Context);
+    const { updateFilters } = React.useContext(Context);
     // const handleOnChange =e => updateFilters(e.target.value)
     return (
       <div className="mt-2 mb-2 pl-2">

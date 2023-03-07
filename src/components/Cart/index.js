@@ -3,7 +3,8 @@ import React from 'react';
 import CartFooter from './CartFooter'
 import { Table } from '../components'
 
-function Cart() {
+function Cart({value}) {
+  console.log(value)
   return (
     <Table heading="My Shopping Cart" subheading="items in your cart">
       <tbody> 

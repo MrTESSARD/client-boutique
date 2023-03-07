@@ -48,4 +48,3 @@ export const withContext=Component=>()=>{
 
 
 export default FiltersProvider
-

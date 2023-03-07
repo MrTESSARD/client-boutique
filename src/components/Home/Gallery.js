@@ -1,6 +1,8 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 import { GET_PRODUCTS } from "../../lib/queries";
+import { Context } from "../../context";
+
 import Card from "./Card";
 
 const styles = {
@@ -11,22 +13,38 @@ const styles = {
 };
 
 // main
-function Gallery({category}) {
+function Gallery({ category }) {
+  let array = [];
+  const { filtersChecked } = React.useContext(Context);
   const { loading, error, data } = useQuery(GET_PRODUCTS, {
-    variables: { category},
+    variables: { category: category },
   });
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error! ${error.message}</div>;
 
-  if (!data) return <div>No data</div>;
+  const productWithFilters = () => {
+    if (!filtersChecked.length) {
+      return data?.products;
+    }
+    filtersChecked.forEach((filter) => {
+      array = [
+        ...array,
+        ...data?.products?.filter(
+          (product) => product.filter === filter.toLowerCase()
+        ),
+      ];
+    });
+    return array;
+  };
+  if (loading) return <div>loading ...</div>;
+  if (error) return <div>sorry an error occured {error}</div>;
+  if (!data) return <div>No data !</div>;
 
+  const products = productWithFilters();
   return (
     <div className="col-md-8 order-md-2 col-lg-9">
       <div className="container-fluid" style={styles.gallery}>
         <div className="row">
-          {/* products */}
-          {data?.products.map((product) => (
-            <Card key={product.id} {...product} />
+          {products.map((product) => (
+            <Card key={product.id} product={product} />
           ))}
         </div>
       </div>
@@ -34,3 +52,4 @@ function Gallery({category}) {
   );
 }
 export default Gallery;
+

@@ -1,5 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { store } from "./lib/redux";
+
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import App from "./App";
 import FiltersProvider from "./context";
@@ -14,9 +17,12 @@ ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <FiltersProvider>
-        <App />
+        <Provider store={store}>
+        <App  />
+
+        </Provider>
       </FiltersProvider>
     </ApolloProvider>
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById("root") 
 );
