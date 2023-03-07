@@ -19,12 +19,15 @@ function reducer(state = {item:[]}, action){
     return state
   }
 }
-export function addTocart(item){
+export function addToCart(item){
     return{
 type:"ADD-TO-CART",
 payload:{item},
     }
   }
 
-  export const store = createStore(reducer);
+  export const store = createStore(
+    reducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  );
     

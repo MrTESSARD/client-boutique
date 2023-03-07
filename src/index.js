@@ -24,5 +24,5 @@ ReactDOM.render(
       </FiltersProvider>
     </ApolloProvider>
   </React.StrictMode>,
-  document.getElementById("root") 
+  document.getElementById("root")
 );
