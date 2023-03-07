@@ -9,11 +9,18 @@ import { createStore } from 'redux';
 // const initialState = {};
 // const middleware = [thunk];
 
-function reducer(state = {item:[]}, action){
+const initialCartState = []
+
+
+function reducer(state = {items:[]}, action){
   switch (action.type) {
 
   case "ADD-TO-CART":
-    return state
+    return {
+      
+      items:[...state.items, 
+      action.payload.item]
+    }
 
   default:
     return state
