@@ -1,5 +1,10 @@
+import { useDispatch } from "react-redux";
+import { updateCart } from "../../lib/redux/reducers";
 
 function Row({id, name, price, quantity}) {
+  const dispatch =useDispatch()
+  const handleOnChange = (e) => dispatch(updateCart(id, e.target.value));
+
     return(
     <tr>
         <td data-th="Product">
@@ -15,7 +20,11 @@ function Row({id, name, price, quantity}) {
         </td>
         <td data-th="Price">${price}</td>
         <td data-th="Quantity">
-          <input type="number" className="form-control form-control-lg text-center" value={quantity} />
+          <input 
+          type="number" 
+          className="form-control form-control-lg text-center" 
+          onChange={handleOnChange}
+          value={quantity} />
         </td>
         <td className="actions" data-th="">
           <div className="text-right">

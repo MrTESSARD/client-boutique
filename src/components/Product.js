@@ -2,7 +2,7 @@ import React , { useState }from 'react';
 import { Link, useLocation } from "react-router-dom";
 import { withContext } from '../context';
 import { useDispatch } from "react-redux";
-import { addToCart } from "../lib/redux";
+import { addToCart } from "../lib/redux/reducers";
 
 function Product() {
   let { state } = useLocation();

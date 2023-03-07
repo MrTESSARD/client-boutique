@@ -9,7 +9,7 @@ import { createStore } from 'redux';
 // const initialState = {};
 // const middleware = [thunk];
 
-const initialCartState = []
+
 
 
 function reducer(state = {items:[]}, action){
@@ -21,6 +21,18 @@ function reducer(state = {items:[]}, action){
       items:[...state.items, 
       action.payload.item]
     }
+  case "UPDATE-CART":
+    return {
+      
+      items:state.items.map((item)=>{
+        if (item.id===action.payload.id) {
+          item.quantity=action.payload.quantity
+          return item
+          
+        }
+        return item
+      })
+    }
 
   default:
     return state
@@ -30,6 +42,12 @@ export function addToCart(item){
     return{
 type:"ADD-TO-CART",
 payload:{item},
+    }
+  }
+export function updateCart(id, quantity){
+    return{
+type:"UPDATE-CART",
+payload:{id, quantity},
     }
   }
 
