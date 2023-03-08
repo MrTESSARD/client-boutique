@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserProfile } from '../../lib/redux/reducers/user';
 
@@ -16,9 +16,14 @@ function Checkout() {
 
   const {profile}=useSelector(state=>state.user)
   const [clientDetails, setClientDetails] = useState({
-    given_name:profile.given_name, 
-    family_name:profile.family_name,
-    email:profile.email
+    given_name:profile?.given_name, 
+    family_name:profile?.family_name,
+    email:profile?.email
+  });
+  const [required, setRequired] = useState({//ça reste inchangé
+    given_name:false, 
+    family_name:false,
+    email:false
   });
 
   const handleOnChange = e=>setClientDetails((prevState)=>({...prevState, [e.target.name]: e.target.value}))
@@ -30,7 +35,39 @@ function Checkout() {
     // setClientDetails((prevState)=>({...prevState, [e.target.name]: e.target.value}))
   }
 
+  useEffect(() => {//une fois componentDidMount() 
+    
+    setClientDetails({
+      given_name:profile?.given_name, 
+    family_name:profile?.family_name,
+    email:profile?.email
+    })
+  }, [profile]);
+
+  useEffect(() => {
+    // Object.entries(clientDetails).map(([key, value])=>{
+    //   setRequired({...required,[key]: value})
+    // })
+    setRequired({
+      given_name:!!clientDetails?.given_name?.length, 
+    family_name:!!clientDetails?.family_name?.length,
+    email:!!clientDetails?.email?.length
+    })
+  }, [clientDetails]);
   
+  const isValid= useMemo(()=>{
+    let errors=[]
+      Object.entries(required).map(([key, value])=>{//on le met en objet 
+        if (!value) {
+          errors.push(key)
+          
+        }
+      })
+
+    
+    return !errors.length
+
+  },[required])
   return (
     <section className="pt-5 pb-5">
         <div className="container">
@@ -56,9 +93,9 @@ function Checkout() {
                       value={clientDetails.given_name}
                       onChange={handleOnChange}
                       />
-                    <div style={styles.valid}>
+                    <small style={!!clientDetails.given_name ? styles.valid:styles.errors}>
                       Valid first name is required.
-                    </div>
+                    </small>
                   </div>
 
                   <div className="col-md-6 mb-3">
@@ -72,9 +109,9 @@ function Checkout() {
                       value={clientDetails.family_name}
                       onChange={handleOnChange}
                        />
-                    <div style={styles.valid}>
+                    <small style={!!clientDetails.family_name ? styles.valid:styles.errors}>
                       Valid last name is required.
-                    </div>
+                    </small>
                   </div>
                 </div>
                 
@@ -90,12 +127,15 @@ function Checkout() {
                     onChange={handleOnChange}
                     />
                     
-                  <div style={styles.valid}>
+                  <div style={!!clientDetails.email ? styles.valid:styles.errors}>
                     Please enter a valid email address for order updates
                   </div>
                 </div>
                
-                <button className="btn btn-primary btn-lg btn-block" type="submit">
+                <button 
+                className="btn btn-primary btn-lg btn-block" 
+                type="submit"
+                disabled={!isValid}>
                     Continue to checkout 
                 </button>
               </form>
