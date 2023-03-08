@@ -5,7 +5,7 @@ import { selectCartTotal } from "../../lib/redux/selectors";
 import GoogleBtn from "./GoogleBtn";
 
 function CartDropdown({ show, handleOnClick }) {
-  const items = useSelector((state) => state.items);
+  const items = useSelector((state) => state.cart.items);
   const total = useSelector(selectCartTotal);
 
   return (
@@ -38,10 +38,7 @@ function CartDropdown({ show, handleOnClick }) {
               </div>
               <div className="col-8">
                 <h6>
-                <Link to="/product"
-                          state={item}
-                  
-                  >
+                  <Link to="/product" state={item}>
                     {item.name}
                   </Link>
                 </h6>
@@ -66,40 +63,67 @@ function CartDropdown({ show, handleOnClick }) {
   );
 }
 function Header() {
-	const [currentLink] = useState('')
-	
-	const [show, setShow] = useState(false)
-	const links = [ "cart", "orders"]
-	const handleOnClick = () => setShow(!show)
-    return( 
-	<header className="target-hover">
-    <nav className="navbar navbar-dark bg-dark navbar-expand-md fixed-top">
-    <div className="container">
-	  <Link to='/' className="navbar-brand font" style={{fontSize: '30px'}}>CLICK & COLLECT</Link>
-      <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav3" aria-controls="navbarNav3" aria-expanded="false" aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon"></span>
-      </button>
-      <div className="navbar-collapse collapse" id="navbarNav3">
-        <ul className="navbar-nav ml-auto">
-          {links.map((link, index)=> {
-              const isCurrent = link === currentLink
-              const isActive = link === currentLink && 'active'
-              return( 
-              <li key={index} className={`nav-item ${isActive}`}>
-                  <Link to={link} className="nav-link" aria-current={isCurrent}>{link}</Link>
-              </li>)
-          })}
-		
-			<li className="nav-item dropdown" onClick={() => setShow(!show)} >
-				<button className={`nav-link dropdown-toggle ${show && 'show'}`} >
-				<i className="fas fa-shopping-cart"></i> <span className="badge bg-orange"></span></button>
-				<CartDropdown show={show} handleOnClick={handleOnClick}/>
-		   </li>  
-        </ul>
-        <GoogleBtn/>
-      </div>
-    </div>
-  </nav>
-  </header>)
+  const items = useSelector((state) => state.cart.items);
+  const [currentLink] = useState("");
+
+  const [show, setShow] = useState(false);
+  const links = ["cart", "orders"];
+  const handleOnClick = () => setShow(!show);
+  return (
+    <header className="target-hover">
+      <nav className="navbar navbar-dark bg-dark navbar-expand-md fixed-top">
+        <div className="container">
+          <Link
+            to="/"
+            className="navbar-brand font"
+            style={{ fontSize: "30px" }}
+          >
+            CLICK & COLLECT
+          </Link>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav3"
+            aria-controls="navbarNav3"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="navbar-collapse collapse" id="navbarNav3">
+            <ul className="navbar-nav ml-auto">
+              {links.map((link, index) => {
+                const isCurrent = link === currentLink;
+                const isActive = link === currentLink && "active";
+                return (
+                  <li key={index} className={`nav-item ${isActive}`}>
+                    <Link
+                      to={link}
+                      className="nav-link"
+                      aria-current={isCurrent}
+                    >
+                      {link}
+                    </Link>
+                  </li>
+                );
+              })}
+
+              <li className="nav-item dropdown" onClick={() => setShow(!show)}>
+                <button
+                  className={`nav-link dropdown-toggle ${show && "show"}`}
+                >
+                  <span className="badge bg-orange">{items.length || ""}</span>
+                  <i className="fas fa-shopping-cart"></i>
+                </button>
+                <CartDropdown show={show} handleOnClick={handleOnClick} />
+              </li>
+            </ul>
+            <GoogleBtn />
+          </div>
+        </div>
+      </nav>
+    </header>
+  );
 }
-export default Header
+export default Header;

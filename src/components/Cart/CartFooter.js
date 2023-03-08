@@ -12,7 +12,7 @@ const styles = {
 
 function CartFooter() {
   const total = useSelector(selectCartTotal);
-const items = useSelector((state=>state.items))
+const items = useSelector((state=>state.cart.items))
     return(
       <>
        <div className="text-right mb-4">

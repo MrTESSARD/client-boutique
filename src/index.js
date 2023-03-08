@@ -20,7 +20,7 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   
-  <GoogleOAuthProvider clientId={CLIENT_ID}>
+  <GoogleOAuthProvider clientId="913129274816-1b62piol10cpr48qsml3c1dhmbm6tasn.apps.googleusercontent.com">
   <React.StrictMode>
     <ApolloProvider client={client}>
       <FiltersProvider>
