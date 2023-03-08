@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserProfile } from '../../lib/redux/reducers/user';
+import { useNavigate } from 'react-router-dom';
 
 const styles =  {
   valid : {
@@ -12,6 +13,7 @@ const styles =  {
   } 
 }
 function Checkout() {
+  let navigate = useNavigate();
   const dispatch = useDispatch()
 
   const {profile}=useSelector(state=>state.user)
@@ -30,6 +32,8 @@ function Checkout() {
   const handleOnSubmit= e=>{
     e.preventDefault()
     dispatch(updateUserProfile(clientDetails))
+    navigate('/payment')
+
       
     
     // setClientDetails((prevState)=>({...prevState, [e.target.name]: e.target.value}))
