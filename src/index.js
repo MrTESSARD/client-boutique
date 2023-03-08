@@ -1,6 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
+
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Provider } from "react-redux";
+
+
 import { store } from "./lib/redux/reducers";
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
@@ -13,7 +17,10 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+
 ReactDOM.render(
+  
+  <GoogleOAuthProvider clientId={CLIENT_ID}>
   <React.StrictMode>
     <ApolloProvider client={client}>
       <FiltersProvider>
@@ -23,6 +30,8 @@ ReactDOM.render(
         </Provider>
       </FiltersProvider>
     </ApolloProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
+  </GoogleOAuthProvider>,
+    
   document.getElementById("root")
 );
