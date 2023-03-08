@@ -116,7 +116,7 @@ function Header() {
                   <span className="badge bg-orange">{items.length || ""}</span>
                   <i className="fas fa-shopping-cart"></i>
                 </button>
-                <CartDropdown show={show} handleOnClick={handleOnClick} />
+                <CartDropdown  show={show} handleOnClick={handleOnClick} />
               </li>
             </ul>
             <GoogleBtn />

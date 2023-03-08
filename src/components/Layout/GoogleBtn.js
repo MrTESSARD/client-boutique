@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
 import axios from 'axios';
+import { handleLErrors, handleLogin, handleLogout, user } from '../../lib/redux/reducers/user';
+import { useDispatch, useSelector } from 'react-redux';
 
 const styles = {
   img: {
@@ -16,16 +18,23 @@ const styles = {
 };
 
 const GoogleBtn = () => {
-  const [ user, setUser ] = useState([]);
-    const [ profile, setProfile ] = useState();
+  const [ user, setUser ] = useState();
+    // const [ profile, setProfile ] = useState();
+  const dispatch = useDispatch()
+  const {profile, error}=useSelector(state=>state.user)
 
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => {
           
           setUser(codeResponse)
+          console.log(user)
+          // dispatch(handleLogin(profile))
           console.log(codeResponse)
         },
-        onError: (error) => console.log('Login Failed:', error)
+        onError: (error) =>{
+          // dispatch(handleLogin(error))
+          console.log('Login Failed:', error)
+        } 
     });
 
     useEffect(
@@ -39,7 +48,9 @@ const GoogleBtn = () => {
                         }
                     })
                     .then((res) => {
-                        setProfile(res.data);
+                      dispatch(handleLogin(res.data))
+                        // setProfile(res.data);
+                        
                     })
                     .catch((err) => console.log(err));
             }
@@ -49,18 +60,19 @@ const GoogleBtn = () => {
 
     // log out function to log the user out of google and set the profile array to null
     const logOut = () => {
-        googleLogout();
+      googleLogout();
+      dispatch(handleLogout());
+        // setProfile(null);
 
-        setProfile(null);
     };
   return (
 
 <>
 {profile ? (
   <>
-    <div class="dropdown">
+    <div className="dropdown">
       <button
-        class="btn btn-secondary dropdown-toggle"
+        className="btn btn-secondary dropdown-toggle"
         type="button"
         id="dropdownMenuButton2"
         data-bs-toggle="dropdown"
@@ -78,7 +90,7 @@ const GoogleBtn = () => {
       </button>
       <ul
         style={styles.dropdown}
-        class="dropdown-menu dropdown-menu-dark"
+        className="dropdown-menu dropdown-menu-dark"
         aria-labelledby="dropdownMenuButton2"
       >
         <li>
