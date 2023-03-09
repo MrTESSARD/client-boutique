@@ -21,7 +21,7 @@ const client = new ApolloClient({
 ReactDOM.render(
   
   <GoogleOAuthProvider clientId="913129274816-1b62piol10cpr48qsml3c1dhmbm6tasn.apps.googleusercontent.com">
-  <React.StrictMode>
+  {/* <React.StrictMode> */}
     <ApolloProvider client={client}>
       <FiltersProvider>
         <Provider store={store}>
@@ -30,7 +30,7 @@ ReactDOM.render(
         </Provider>
       </FiltersProvider>
     </ApolloProvider>
-  </React.StrictMode>
+  {/* </React.StrictMode> */}
   </GoogleOAuthProvider>,
     
   document.getElementById("root")
