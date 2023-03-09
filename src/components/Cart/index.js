@@ -9,7 +9,7 @@ function Cart({ value }) {
   const items = useSelector((state) => state.cart.items);
   // const total = useSelector(selectCartTotal);
   // debugger;
-  console.log(value);
+  // console.log(value);
   return (
     <Table
       items={items}
@@ -17,12 +17,19 @@ function Cart({ value }) {
       subheading="items in your cart"
     >
       <tbody>
-        {!items.length && <div>No Items in the cart yet </div>}
+      {!items.length &&<tr><td>No Items in the cart yet</td></tr>}
+        {/* {item} */}
         {items.map((item) => (
           <Row key={item.id} {...item} />
         ))}
+
       </tbody>
+      <tbody>
       <CartFooter  />
+
+      </tbody>
+      
+      
     </Table>
   );
 }

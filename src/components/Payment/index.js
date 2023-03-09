@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,  } from "react";
 
 import Input from "./Input";
 // import PaypalExpressBtn from "react-paypal-express-checkout";
 
 
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { useSelector } from "react-redux";
+import Row from "./Row";
 
 
 
@@ -48,6 +50,7 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 
 function Payment() {
+  const items=useSelector(state=>state.cart.items)
 const [show, setShow] = useState(false);
 const [success, setSuccess] = useState(false);
 const [ErrorMessage, setErrorMessage] = useState("");
@@ -116,7 +119,11 @@ useEffect(() => {
               <span className="badge badge-secondary badge-pill">3</span>
             </h4>
             <ul className="list-group mb-3">
-              {/* cart items */}
+            {items?.map((item)=>(
+              <Row key={item.id} {...item}/>
+              
+              ))}
+
               <li className="list-group-item d-flex justify-content-between">
                 <span>Total (USD)</span>
                 <strong>$0.00</strong>
