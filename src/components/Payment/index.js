@@ -85,25 +85,17 @@ const processPayment = (payment) => {//confirmer la transaction
 
  const addOrder=()=>{//ajouter la commande
   return new Promise(resolve=>{
-    // console.log(profile)
+    console.log(profile)
     const newOrder = {
       id:new Date().getMilliseconds(),
       ownerId :profile.id,
+      clientDetails:`${profile.family_name}.${profile.given_name}`,
       date:new Date(),
       pickupDate:nextDaydelivery(),
       total:total,
       items:items
     }
-    // mutate({
-    //   variables:{
-    //     id:new Date().getMilliseconds(),
-    //     ownerId :profile.googleId,
-    //     date:new Date(),
-    //     pickupDate:nextDaydelivery(),
-    //     total:total,
-    //     items:items
-    //   }
-    // })
+    mutate({variables:newOrder})
     console.log("order successfully conformed and added",newOrder)
     resolve()
   })

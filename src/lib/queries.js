@@ -18,7 +18,7 @@ export const ADD_ORDER = gql`
         $pickupDate: String!,
         $clientDetails:String!,
         $total:Float!,
-        $items: [ProductInputtype]) {
+        $items: [ProductInput]) {
             addOrder(  
                 id:$id,   
                 ownerId:$ownerId,  
