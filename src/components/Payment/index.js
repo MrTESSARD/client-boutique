@@ -7,6 +7,9 @@ import Input from "./Input";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useSelector } from "react-redux";
 import Row from "./Row";
+import {scrollToTop} from "./utils";
+import { selectCartTotal } from "../../lib/redux/selectors";
+import Alert from "./Alert";
 
 
 
@@ -45,16 +48,61 @@ import Row from "./Row";
 
 //--------------------------------------------------
 
+const STATUS = {
+  PENDING: "pending",
+  COMPLETE: "complete",
+  CONFIRMED: "confirmed",
+  CANCELLED: "cancelled",
+  FAILED: "error",
+};
 
 
 
-
-function Payment() {
+function Payment({history}) {
   const items=useSelector(state=>state.cart.items)
+  const total = useSelector(selectCartTotal)
+  const [valid, setValid] = useState(false);
+  const [status, setStatus] = useState(STATUS.PENDING);
 const [show, setShow] = useState(false);
-const [success, setSuccess] = useState(false);
 const [ErrorMessage, setErrorMessage] = useState("");
 const [orderID, setOrderID] = useState(false);
+
+
+
+const processPayment = (payment) => {//confirmer la transaction
+  return new Promise((resolve)=>{
+    const data ={
+      cartDetails:items,
+      payment:payment
+    }
+    console.log("The payment was succeeded!", payment)
+    resolve(data)})
+ };
+
+ const addOrder=()=>{//ajouter la commande
+  return new Promise(resolve=>{
+    console.log("order successfully conformed and added")
+    resolve()
+  })
+ }
+
+ const confirmOrder=()=>{//confirmer loa commande 
+  return new Promise(resolve=>{
+    setStatus(STATUS.CONFIRMED)//reset cart panier
+    // console.log("order successfully conformed and added")
+    // resolve()
+  })
+ }
+
+ const handleOnSubmit= async (e)=>{
+  e.preventDefault()
+  await addOrder()
+  await confirmOrder()
+  await scrollToTop()
+  //history push
+}
+
+
 // creates a paypal order
 const createOrder = (data, actions) => {
   return actions.order
@@ -64,7 +112,7 @@ const createOrder = (data, actions) => {
           description: "Uncia click & collect",
           amount: {
             currency_code: "USD",
-            value: 1,
+            value: total,
           },
         },
       ],
@@ -86,18 +134,22 @@ const createOrder = (data, actions) => {
 const onApprove = (data, actions) => {
   return actions.order.capture().then(function (details) {
     const { payer } = details;
-    setSuccess(true);
-    console.log(data)
+    // console.log("payer")
+    // console.log(payer)
+    processPayment(payer)
+    setStatus(STATUS.COMPLETE);
+    // console.log(data)
   });
 };
 const onCancel = (data) => {
-  console.log(data)
+  // console.log(data)
+  setStatus(STATUS.CANCELLED);
   };
 
 
 useEffect(() => {
-  console.log(success)
-}, [success]);
+  setValid(status===STATUS.COMPLETE)
+}, [status]);
 
 
   return (
@@ -107,6 +159,9 @@ useEffect(() => {
     <section className="pt-5 pb-5">
       <div className="container">
         {/* success banner */}
+        <Alert.Confirmed status={status=== STATUS.CONFIRMED}/>
+        <Alert.Cancelled status={status=== STATUS.CANCELLED}/>
+        <Alert.Error status={status=== STATUS.FAILED}/>
         <div className="py-5 text-center row justify-content-center">
           <div className="col-md-10">
             <h2>Checkout</h2>
@@ -126,10 +181,10 @@ useEffect(() => {
 
               <li className="list-group-item d-flex justify-content-between">
                 <span>Total (USD)</span>
-                <strong>$0.00</strong>
+                <strong>${total.toFixed(2) || "0.00"}</strong>
               </li>
             </ul>
-            <form className="card p-2">
+            <form className="card p-2" >
               <div className="input-group">
                 <input
                   type="text"
@@ -145,7 +200,7 @@ useEffect(() => {
             </form>
           </div>
           <div className="col-md-6 order-md-1">
-            <form>
+            <form onSubmit={handleOnSubmit}>
               <h4 className="mb-3">Payment</h4>
               <hr className="mb-4" />
               <div className="row">
@@ -195,8 +250,9 @@ useEffect(() => {
               <button
                 className="btn btn-primary btn-lg btn-block"
                 type="submit"
+                disabled={!valid}
               >
-                <i className="far fa-credit-card"></i> Confirmer
+                <i className="far fa-credit-card"></i> Confirm
               </button>
             </form>
           </div>

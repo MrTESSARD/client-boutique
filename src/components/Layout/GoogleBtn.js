@@ -22,7 +22,7 @@ const GoogleBtn = () => {
   const [ token, setToken ] = useState();
     // const [ profile, setProfile ] = useState();
   const dispatch = useDispatch()
-  const {profile, error}=useSelector(state=>state.user)
+  
 
 
   // useEffect(() => {
@@ -92,6 +92,8 @@ const GoogleBtn = () => {
         // setProfile(null);
 
     };
+    const {profile, error}=useSelector(state=>state.user)
+
   return (
 
 <>
@@ -109,7 +111,7 @@ const GoogleBtn = () => {
           width="32"
           height="32"
           // src="https://lh3.googleusercontent.com/a/AGNmyxYhgrNypKi4gUCX6F5SBTLW82HFJhm-s4P8jYWO=s96-c"
-          src={profile?.picture}
+          src={profile.picture}
           style={styles.img}
           alt="profile"
         />
@@ -134,6 +136,7 @@ const GoogleBtn = () => {
     </div>
   </>
 ) : (
+  //-------------------------------------------------
   <button onClick={() => login()}>Sign in 🚀 </button>
 )}
 </>

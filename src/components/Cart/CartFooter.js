@@ -5,9 +5,11 @@ import { selectCartTotal } from '../../lib/redux/selectors';
 
 const styles = {
   disabled: {
-    cursor: 'not-allowed', 
-    opacity: 0.5
-  }
+    // cursor: 'not-allowed', 
+    opacity: 0.5,
+    
+  },
+  to:"/checkout" 
 }
 
 function CartFooter() {
@@ -24,7 +26,7 @@ const items = useSelector((state=>state.cart.items))
         <Link  to="/">
           <i className="fas fa-arrow-left mr-2"></i> Continue Shopping 
         </Link>
-        <Link className="btn btn-primary mb-4 btn-lg pl-5 pr-5" to="/checkout" style={!items.length ? styles.disabled : {}}>
+        <Link className="btn btn-primary mb-4 btn-lg pl-5 pr-5" to={!items.length ? {} : styles.to  } style={!items.length ? styles.disabled : {}}>
           Checkout
         </Link>
       </td>
