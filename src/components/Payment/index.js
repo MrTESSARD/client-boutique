@@ -10,7 +10,9 @@ import Row from "./Row";
 import {scrollToTop} from "./utils";
 import { selectCartTotal } from "../../lib/redux/selectors";
 import Alert from "./Alert";
-
+import { ADD_ORDER } from "../../lib/queries";
+import { useMutation } from "@apollo/client";
+import { nextDaydelivery } from "./utils";
 
 
 // const onSuccess = (payment) => {
@@ -60,7 +62,9 @@ const STATUS = {
 
 function Payment({history}) {
   const items=useSelector(state=>state.cart.items)
+  const {profile }= useSelector(state=>state.user)
   const total = useSelector(selectCartTotal)
+  const [mutate, loading] = useMutation(ADD_ORDER);
   const [valid, setValid] = useState(false);
   const [status, setStatus] = useState(STATUS.PENDING);
 const [show, setShow] = useState(false);
@@ -81,7 +85,26 @@ const processPayment = (payment) => {//confirmer la transaction
 
  const addOrder=()=>{//ajouter la commande
   return new Promise(resolve=>{
-    console.log("order successfully conformed and added")
+    // console.log(profile)
+    const newOrder = {
+      id:new Date().getMilliseconds(),
+      ownerId :profile.id,
+      date:new Date(),
+      pickupDate:nextDaydelivery(),
+      total:total,
+      items:items
+    }
+    // mutate({
+    //   variables:{
+    //     id:new Date().getMilliseconds(),
+    //     ownerId :profile.googleId,
+    //     date:new Date(),
+    //     pickupDate:nextDaydelivery(),
+    //     total:total,
+    //     items:items
+    //   }
+    // })
+    console.log("order successfully conformed and added",newOrder)
     resolve()
   })
  }
