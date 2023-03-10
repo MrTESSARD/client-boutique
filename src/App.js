@@ -8,11 +8,13 @@ import Payment from "./components/Payment";
 import Product from "./components/Product";
 import Home from "./components/Home";
 
-import "./App.css";
 
+
+import "./App.css";
 
 function App() {
   
+
  
   
   return (
@@ -24,7 +26,7 @@ function App() {
           <Route path="/cart" element={<Cart/>} />
           <Route path="/product" element={<Product />}   />
           <Route path="/checkout" element={<Checkout/>} />
-          <Route path="/orders" element={<Orders/>} />
+          <Route path="/orders" element={<Orders />} />
           <Route path="/payment" element={<Payment/>} />
         </Routes>
       </Layout>

@@ -11,6 +11,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import App from "./App";
 import FiltersProvider from "./context";
 
+
 const client = new ApolloClient({
   // uri: 'https://flyby-router-demo.herokuapp.com/',
   uri: "http://localhost:4000/graphql/",

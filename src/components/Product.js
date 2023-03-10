@@ -8,7 +8,7 @@ function Product() {
   let { state } = useLocation();
   const {id, name, price} = state
   
-  // console.log(state)
+  console.log(state)
   // console.log(value)
   const dispatch = useDispatch();
   const [details, setDetails] = useState({ quantity: 1, size: "small" });

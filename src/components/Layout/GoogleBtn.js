@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
 import axios from 'axios';
-import { handleLErrors, handleLogin, handleLogout, user } from '../../lib/redux/reducers/user';
+import {  handleLogin, handleLogout,  } from '../../lib/redux/reducers/user';
 import { useDispatch, useSelector } from 'react-redux';
 
 const styles = {
@@ -80,7 +80,7 @@ const GoogleBtn = () => {
                     .catch((err) => console.log(err));
             }
         },
-        [ user, token]
+        [ user, token, dispatch]
     );
 
     // log out function to log the user out of google and set the profile array to null
@@ -92,7 +92,7 @@ const GoogleBtn = () => {
         // setProfile(null);
 
     };
-    const {profile, error}=useSelector(state=>state.user)
+    const {profile}=useSelector(state=>state.user)
 
   return (
 

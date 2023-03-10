@@ -19,6 +19,11 @@ export function cart(state = { items: [] }, action) {
         items: state.items.filter(item=> item.id !== action.payload.id && item) 
          
       };
+    case "RESET_CART":
+      return {
+        items: []
+         
+      };
 
     default:
       return state;
@@ -42,4 +47,11 @@ export function removeFromCart(id) {
     payload: { id },
   };
 }
+export function resetCart(id) {
+  return {
+    type: "RESET_CART"
+  };
+}
+
+
 

@@ -5,7 +5,7 @@ import Input from "./Input";
 
 
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Row from "./Row";
 import {scrollToTop} from "./utils";
 import { selectCartTotal } from "../../lib/redux/selectors";
@@ -13,6 +13,9 @@ import Alert from "./Alert";
 import { ADD_ORDER } from "../../lib/queries";
 import { useMutation } from "@apollo/client";
 import { nextDaydelivery } from "./utils";
+import { resetCart } from "../../lib/redux/reducers/cart";
+
+import { useNavigate } from 'react-router-dom';
 
 
 // const onSuccess = (payment) => {
@@ -60,7 +63,12 @@ const STATUS = {
 
 
 
-function Payment({history}) {
+function Payment(props) {
+  // console.log(props)
+  // console.log(props)
+  // console.log(props)
+  // console.log(props)
+  const dispatch=useDispatch()
   const items=useSelector(state=>state.cart.items)
   const {profile }= useSelector(state=>state.user)
   const total = useSelector(selectCartTotal)
@@ -70,7 +78,7 @@ function Payment({history}) {
 const [show, setShow] = useState(false);
 const [ErrorMessage, setErrorMessage] = useState("");
 const [orderID, setOrderID] = useState(false);
-
+const navigate = useNavigate();
 
 
 const processPayment = (payment) => {//confirmer la transaction
@@ -85,7 +93,7 @@ const processPayment = (payment) => {//confirmer la transaction
 
  const addOrder=()=>{//ajouter la commande
   return new Promise(resolve=>{
-    console.log(profile)
+    // console.log(profile)
     const newOrder = {
       id:new Date().getMilliseconds(),
       ownerId :profile.id,
@@ -104,6 +112,7 @@ const processPayment = (payment) => {//confirmer la transaction
  const confirmOrder=()=>{//confirmer loa commande 
   return new Promise(resolve=>{
     setStatus(STATUS.CONFIRMED)//reset cart panier
+    dispatch(resetCart())
     // console.log("order successfully conformed and added")
     // resolve()
   })
@@ -112,11 +121,18 @@ const processPayment = (payment) => {//confirmer la transaction
  const handleOnSubmit= async (e)=>{
   e.preventDefault()
   await addOrder()
+  redirect()
   await confirmOrder()
   await scrollToTop()
-  //history push
+
 }
 
+function redirect() {
+  console.log("navigate")
+  setTimeout(()=>navigate('/'), 3000)
+  // navigate('/home');
+
+}
 
 // creates a paypal order
 const createOrder = (data, actions) => {
@@ -215,7 +231,8 @@ useEffect(() => {
             </form>
           </div>
           <div className="col-md-6 order-md-1">
-            <form onSubmit={handleOnSubmit}>
+            <form
+             onSubmit={handleOnSubmit}>
               <h4 className="mb-3">Payment</h4>
               <hr className="mb-4" />
               <div className="row">
@@ -269,6 +286,13 @@ useEffect(() => {
               >
                 <i className="far fa-credit-card"></i> Confirm
               </button>
+              {/* <button
+                className="btn btn-primary btn-lg btn-block"
+                type="submit"
+                onClick={handleClick}
+              >
+                <i className="far fa-credit-card"></i> Confirm
+              </button> */}
             </form>
           </div>
         </div>

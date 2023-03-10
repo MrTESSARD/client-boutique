@@ -10,6 +10,17 @@ export const GET_PRODUCTS = gql`
     }
   }
 `;
+export const GET_ORDERS = gql`
+query($ownerId: String!) {
+  orders(ownerId: $ownerId) {
+    id
+    date
+    items{
+      name
+    }
+    
+  }
+}`
 export const ADD_ORDER = gql`
     mutation(
         $id: ID, 
