@@ -4,7 +4,6 @@ import ReactDOM from "react-dom";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Provider } from "react-redux";
 
-
 import { store } from "./lib/redux/reducers";
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
