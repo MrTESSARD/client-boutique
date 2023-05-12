@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCartTotal } from "../../lib/redux/selectors";
@@ -65,9 +65,20 @@ function CartDropdown({ show, handleOnClick }) {
 function Header() {
   const items = useSelector((state) => state.cart.items);
   const [currentLink] = useState("");
+  // const [active, setActive] = useState(false);
+  const [log, setLog] = useState(false);
+  function logChange(newValue) {
+    setLog(newValue);
+    console.log(newValue)
+  }
 
   const [show, setShow] = useState(false);
   const links = ["cart", "orders"];
+  const accessToken = localStorage.getItem("accessToken")
+  useEffect(() => {
+    setLog(localStorage.getItem("accessToken") !== null && localStorage.getItem("accessToken").length > 0);
+    
+  }, []);
   const handleOnClick = () => setShow(!show);
   return (
     <header className="target-hover">
@@ -97,12 +108,14 @@ function Header() {
                 const isCurrent = link === currentLink;
                 const isActive = link === currentLink && "active";
                 return (
-                  <li key={index} className={`nav-item ${isActive}`}>
+                  <li key={index} className={`nav-item ${isActive}`} style={link==="orders" && !log ? { pointerEvents: 'none' } : null}>
                     <Link
                       to={link}
                       className="nav-link"
                       aria-current={isCurrent}
-                    >
+                      
+                      
+                      >
                       {link}
                     </Link>
                   </li>
@@ -119,7 +132,7 @@ function Header() {
                 <CartDropdown  show={show} handleOnClick={handleOnClick} />
               </li>
             </ul>
-            <GoogleBtn />
+            <GoogleBtn log={logChange}/>
           </div>
         </div>
       </nav>

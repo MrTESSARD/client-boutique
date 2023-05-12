@@ -17,7 +17,7 @@ const styles = {
   },
 };
 
-const GoogleBtn = () => {
+const GoogleBtn = ({log}) => {
   const [ user, setUser ] = useState();
   const [ token, setToken ] = useState();
     // const [ profile, setProfile ] = useState();
@@ -36,7 +36,7 @@ const GoogleBtn = () => {
 // console.log(user)
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => {
-          
+          log(true)
           setUser(codeResponse)
           // console.log(codeResponse)
           localStorage.setItem('accessToken', codeResponse.access_token);
@@ -47,6 +47,7 @@ const GoogleBtn = () => {
         onError: (error) =>{
           // dispatch(handleLogin(error))
           console.log('Login Failed:', error)
+          log(false)
         } 
     });
     useEffect(() => {
@@ -88,6 +89,7 @@ const GoogleBtn = () => {
       googleLogout();
       dispatch(handleLogout());
       localStorage.removeItem('accessToken');
+      log(false)
       // setUser(null)
         // setProfile(null);
 
