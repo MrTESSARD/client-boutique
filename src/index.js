@@ -14,7 +14,8 @@ import FiltersProvider from "./context";
 const client = new ApolloClient({
   // uri: 'https://flyby-router-demo.herokuapp.com/',
   // uri: "http://localhost:4000/graphql/",//fonctionne en local
-  uri: "http://vps94717.serveur-vps.net:4000/graphql/",//ok
+  // uri: "http://vps94717.serveur-vps.net:4000/graphql/",//ok
+  uri: "http://vps95240.serveur-vps.net:4000/graphql/",//ok
   cache: new InMemoryCache(),
 });
 
