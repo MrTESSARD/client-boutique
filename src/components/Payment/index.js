@@ -72,12 +72,12 @@ function Payment(props) {
   const items=useSelector(state=>state.cart.items)
   const {profile }= useSelector(state=>state.user)
   const total = useSelector(selectCartTotal)
-  const [mutate, loading] = useMutation(ADD_ORDER);
+  const [mutate] = useMutation(ADD_ORDER);
   const [valid, setValid] = useState(false);
   const [status, setStatus] = useState(STATUS.PENDING);
-const [show, setShow] = useState(false);
-const [ErrorMessage, setErrorMessage] = useState("");
-const [orderID, setOrderID] = useState(false);
+// const [show, setShow] = useState(false);
+// const [ErrorMessage, setErrorMessage] = useState("");
+// const [orderID, setOrderID] = useState(false);
 const navigate = useNavigate();
 
 
@@ -153,7 +153,7 @@ const createOrder = (data, actions) => {
       },
     })
     .then((orderID) => {
-      setOrderID(orderID);
+      // setOrderID(orderID);
       return orderID;
     })
     .catch((err) => {

@@ -74,7 +74,7 @@ function Header() {
 
   const [show, setShow] = useState(false);
   const links = ["cart", "orders"];
-  const accessToken = localStorage.getItem("accessToken")
+  // const accessToken = localStorage.getItem("accessToken")
   useEffect(() => {
     setLog(localStorage.getItem("accessToken") !== null && localStorage.getItem("accessToken").length > 0);
     

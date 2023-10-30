@@ -4,7 +4,7 @@ import { Table } from "../components";
 import Row from "./Row";
 import { GET_ORDERS } from "../../lib/queries";
 import { useQuery } from "@apollo/client";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 // import {  useLocation } from "react-router-dom";
 
 
@@ -15,7 +15,7 @@ function Orders() {
 
   const {profile} = useSelector((state)=>state.user)
  
-    const { loading, error, data } = useQuery(GET_ORDERS, {
+    const { data } = useQuery(GET_ORDERS, {
       variables: { ownerId: profile.id },
     })
     
