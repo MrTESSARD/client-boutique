@@ -17,7 +17,8 @@ const client = new ApolloClient({
   // uri: "http://vps94717.serveur-vps.net:4000/graphql/",//ok
   // uri: "http://vps95240.serveur-vps.net:4000/graphql/",//ok
   // uri: "http://vps96963.serveur-vps.net:4002/graphqlclick/",//ok
-  uri: "https://tessard.site:4002/graphqlclick/",//ok
+  // uri: "https://tessard.site:4002/graphqlclick/",//ok
+  uri: "https://tessard.store:4002/graphqlclick/",//ok
 
   cache: new InMemoryCache(),
 });
